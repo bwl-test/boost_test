@@ -12,9 +12,9 @@ struct MyStruct { int i; bool b; double d; };
 
 BOOST_FUSION_ADAPT_STRUCT (
     MyStruct,
-    (int, i)
-    (bool, b)
-    (double, d)
+    i,
+    b,
+    d
 )
 
 auto to_tuple(MyStruct const& ms){
