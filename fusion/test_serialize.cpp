@@ -1,3 +1,4 @@
+#include "common.hpp"
 #include <iostream>
 #include <type_traits>
 #include <tuple>
@@ -6,20 +7,10 @@
 #include "serialize.hpp"
 #include <boost/fusion/adapted.hpp>
 
-struct MyStruct {
-    int i;
-    double d;
-    std::string name;
-};
 
-BOOST_FUSION_ADAPT_STRUCT (
-    MyStruct,
-    i,
-    d,
-    name
-)
 
 TEST_CASE( "serialize misc", "[single-file]" ) {
+    std::cout << "--------------serialize_test------------------\n";
     int a = 0;
     simple::Serializer serializer;
     serializer(a);

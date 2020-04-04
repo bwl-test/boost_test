@@ -8,20 +8,20 @@
 
 namespace simple {
 
-using namespace boost::fusion;
+using namespace boost;
 
 struct Serializer {
     template <class T>
     void operator()(const T& t,
-                    std::enable_if_t<!traits::is_sequence<T>::value> *dummy=nullptr) const {
+                    std::enable_if_t<!fusion::traits::is_sequence<T>::value> *dummy=nullptr) const {
         std::cout << t;
         std::cout << "\n";
     }
     
     template <class T>
     void operator()(const T& t,
-                    std::enable_if_t<traits::is_sequence<T>::value> *dummy=nullptr) const {
-        for_each(t, *this);
+                    std::enable_if_t<fusion::traits::is_sequence<T>::value> *dummy=nullptr) const {
+        fusion::for_each(t, *this);
     }
     
     template <class T>
