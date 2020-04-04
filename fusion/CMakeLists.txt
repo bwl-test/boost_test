@@ -1,4 +1,4 @@
-set(SRCS main.cpp trivial.cpp)
+set(SRCS main.cpp trivial.cpp serialize.hpp test_serialize.cpp)
 
 add_executable(fusion ${SRCS})
 
