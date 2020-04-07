@@ -3,7 +3,8 @@ set(SRCS
 	common.hpp
 	trivial.cpp 
 	serialize.hpp test_serialize.cpp
-	test_invoke.cpp)
+	test_invoke.cpp
+    simple_group.cpp)
 
 add_executable(fusion ${SRCS})
 
