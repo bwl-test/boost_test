@@ -29,19 +29,22 @@ struct group_1 : mpl::vector<sig::a, sig::b> {};
 struct group_2 : mpl::vector<sig::c, sig::d> {};
 struct group_3 : mpl::vector<sig::e> {};
 
+struct group_4 : mpl::vector<mpl::vector<sig::a, sig::b>, sig::e> {};
+
 
 template <class Seq, class T, class Enable = void>
 struct flatten_groups_impl {
     using type = typename mpl::push_back<Seq, T>::type;
 };
 
+//待展开对象是'容器'时,递归展开容器内各对象
 template <class Seq, class T>
 struct flatten_groups_impl<Seq, T, std::enable_if_t<mpl::is_sequence<T>::value>> {
-    using type = typename mpl::copy<T, mpl::back_inserter<Seq>>::type;
+    using type = typename mpl::fold<T, Seq, flatten_groups_impl<mpl::_1, mpl::_2>>::type;
 };
 
 template <class Groups>
-struct flatten_groups : mpl::fold<Groups, mpl::vector<>, flatten_groups_impl<mpl::_1, mpl::_2>> {};
+struct flatten_groups : flatten_groups_impl<mpl::vector<>, Groups> {};
 
 template <class Groups>
 using flatten_groups_t = typename flatten_groups<Groups>::type;
@@ -81,6 +84,7 @@ public:
 
 struct Foo : public mpl::vector<group_1, group_2, group_3> {};
 using SignalCombiner = signal_combiner<Foo>;
+
 
 TEST_CASE("signal group test", "[single-file]") {
     SignalCombiner combiner;
