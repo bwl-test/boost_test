@@ -17,4 +17,7 @@ TEST_CASE("invoke test", "[single-file]") {
     std::cout << "--------------invoke_test------------------\n";
     MyStruct mystruct{3, 4, "baiwenlei"};
     fusion::invoke(foo, mystruct);
+    
+    auto const fused_foo = fusion::make_fused(&foo);
+    fused_foo(mystruct);
 }
