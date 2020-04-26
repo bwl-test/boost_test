@@ -4,13 +4,15 @@
 #include <catch2/catch.hpp>
 #include <boost/fusion/include/filter_view.hpp>
 
-#include <boost/fusion/include/vector.hpp>
 #include <boost/fusion/include/io.hpp>
 #include <boost/fusion/include/for_each.hpp>
 #include <boost/fusion/include/filter.hpp>
 #include <boost/fusion/include/find.hpp>
 #include <boost/fusion/include/push_back.hpp>
-#include <boost/fusion/adapted/std_tuple.hpp>
+#include <boost/fusion/adapted.hpp>
+#include <boost/fusion/container.hpp>
+//#include <boost/fusion/sequence.hpp>
+#include <boost/fusion/include/at_key.hpp>
 
 using namespace boost;
 
@@ -21,9 +23,18 @@ TEST_CASE( "trival-test", "[single-file]" ) {
     std::cout << "--------------trival-test------------------\n";
     std::cout << std::boolalpha;
     
-    using tuple_t = std::tuple<int, std::string, bool>;
-    tuple_t tuple = std::make_tuple(10, "hello tuple", true);
+    using tuple_t = std::tuple<int, std::string, std::string, bool>;
+    tuple_t tuple = std::make_tuple(10, "hello tuple", "hello tuple2", true);
     std::cout << fusion::as_vector(tuple) << "\n";
+    
+    auto set = fusion::as_set(tuple);
+    fusion::at_key<std::string>(set) = "Another string";
+    std::cout << set << "\n";
+    std::cout << fusion::as_vector(tuple) << "\n";
+    
+//    fusion::detail::at_key_impl<decltype(set), std::string, fusion::set_tag> b;
+    
+//    unimplement<decltype(fusion::as_set(tuple))> a;
     
     fusion::filter_view<tuple_t, std::is_integral<mpl::_1>> view{tuple};
     std::cout << view << "\n";

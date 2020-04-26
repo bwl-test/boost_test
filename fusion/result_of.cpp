@@ -1,4 +1,4 @@
-#define BOOST_RESULT_OF_USE_TR1_WITH_DECLTYPE_FALLBACK
+//#define BOOST_RESULT_OF_USE_TR1_WITH_DECLTYPE_FALLBACK
 
 #include <iostream>
 #include <type_traits>
@@ -17,47 +17,45 @@ using namespace boost;
 template <class T>
 struct unimplement;
 
-struct fold_op
-{
-    template <typename Sig> struct result;
-    template <class S, class A, class B> struct result< S(A &,B &) >
-        : mpl::max<A,B> { };
-};
-
-struct n_placeholders
-{
-    template <typename Seq>
-    struct apply
-        : mpl::next< typename fusion::result_of::fold<
-            Seq, mpl::int_<-1>, fold_op
-        >::type>::type
-    { };
-};
-
-TEST_CASE( "result_of test", "[single-file]" ) {
-    std::cout << "--------------result_of------------------\n";
-
-    using Seq = fusion::vector<mpl::int_<0>, mpl::int_<5>, mpl::int_<1>>;
-     std::cout << n_placeholders::template apply<Seq>::value << "\n";
-//#ifdef BOOST_RESULT_OF_USE_DECLTYPE
-//#error "defined BOOST_RESULT_OF_USE_DECLTYPE"
-//#endif
+//struct fold_op
+//{
+//    template <typename Sig> struct result;
+//    template <class S, class A, class B> struct result< S(A &,B &) >
+//        : mpl::max<A,B> { };
+//    template <class A, class B>
+//    auto operator()(A&, B&) {
+//        return typename mpl::max<A,B>::type{};
+//    }
+//};
 //
-//#ifdef BOOST_RESULT_OF_USE_TR1_WITH_DECLTYPE_FALLBACK
-//#error "defined BOOST_RESULT_OF_USE_TR1_WITH_DECLTYPE_FALLBACK"
-//#endif
-
-    typename boost::result_of<fold_op(mpl::int_<-1>&, mpl::int_<0>&)>::type a;
-//    std::cout << "fold_op has result type: " << detail::result_of_has_result_type<fold_op>::value << "\n";
+//struct n_placeholders
+//{
+//    template <typename Seq>
+//    struct apply
+//        : mpl::next< typename fusion::result_of::fold<
+//            Seq, mpl::int_<-1>, fold_op
+//        >::type>::type
+//    { };
+//};
 //
-//    std::cout << detail::result_of_nested_result<fold_op, fold_op(mpl::int_<5>&, mpl::int_<1>&)>::type::value << "\n";
+//TEST_CASE( "result_of test", "[single-file]" ) {
+//    std::cout << "--------------result_of------------------\n";
 //
-//    std::cout << fold_op::template result<void(mpl::int_<5>&, mpl::int_<1>&)>::type::value << "\n";
+//    using Seq = fusion::vector<mpl::int_<0>, mpl::int_<5>, mpl::int_<1>>;
+//     std::cout << n_placeholders::template apply<Seq>::value << "\n";
 //
-//    std::cout << mpl::max<mpl::int_<5>, mpl::int_<1>>::type::value << "\n";
 //
-//    std::cout << mpl::int_<5>::value << "\n";
-}
+//    typename boost::result_of<fold_op(mpl::int_<-1>&, mpl::int_<0>&)>::type a;
+////    std::cout << "fold_op has result type: " << detail::result_of_has_result_type<fold_op>::value << "\n";
+////
+////    std::cout << detail::result_of_nested_result<fold_op, fold_op(mpl::int_<5>&, mpl::int_<1>&)>::type::value << "\n";
+////
+////    std::cout << fold_op::template result<void(mpl::int_<5>&, mpl::int_<1>&)>::type::value << "\n";
+////
+////    std::cout << mpl::max<mpl::int_<5>, mpl::int_<1>>::type::value << "\n";
+////
+////    std::cout << mpl::int_<5>::value << "\n";
+//}
 
 
 /*=============================================================================
@@ -84,35 +82,33 @@ TEST_CASE( "result_of test", "[single-file]" ) {
     form.
 ==============================================================================*/
 
-//#define BOOST_RESULT_OF_USE_TR1_WITH_DECLTYPE_FALLBACK
-//
-//#include <boost/fusion/functional/invocation/invoke.hpp>
-//#include <boost/fusion/functional/adapter/unfused.hpp>
-//#include <boost/fusion/support/deduce_sequence.hpp>
-//
-//#include <boost/fusion/sequence/intrinsic/at.hpp>
-//#include <boost/fusion/sequence/intrinsic/front.hpp>
-//#include <boost/fusion/sequence/intrinsic/size.hpp>
-//#include <boost/fusion/algorithm/transformation/transform.hpp>
-//#include <boost/fusion/algorithm/transformation/pop_front.hpp>
-//#include <boost/fusion/algorithm/iteration/fold.hpp>
-//#include <boost/fusion/view/filter_view.hpp>
-//
-//#include <boost/functional/forward_adapter.hpp>
-//#include <boost/functional/lightweight_forward_adapter.hpp>
-//
-//#include <boost/type_traits/remove_reference.hpp>
-//
-//#include <boost/mpl/eval_if.hpp>
-//#include <boost/mpl/identity.hpp>
-//#include <boost/mpl/int.hpp>
-//#include <boost/mpl/max.hpp>
-//#include <boost/mpl/next.hpp>
-//
-//#include <boost/ref.hpp>
-//#include <iostream>
-//#include <typeinfo>
-//
+#include <boost/fusion/functional/invocation/invoke.hpp>
+#include <boost/fusion/functional/adapter/unfused.hpp>
+#include <boost/fusion/support/deduce_sequence.hpp>
+
+#include <boost/fusion/sequence/intrinsic/at.hpp>
+#include <boost/fusion/sequence/intrinsic/front.hpp>
+#include <boost/fusion/sequence/intrinsic/size.hpp>
+#include <boost/fusion/algorithm/transformation/transform.hpp>
+#include <boost/fusion/algorithm/transformation/pop_front.hpp>
+#include <boost/fusion/algorithm/iteration/fold.hpp>
+#include <boost/fusion/view/filter_view.hpp>
+
+#include <boost/functional/forward_adapter.hpp>
+#include <boost/functional/lightweight_forward_adapter.hpp>
+
+#include <boost/type_traits/remove_reference.hpp>
+
+#include <boost/mpl/eval_if.hpp>
+#include <boost/mpl/identity.hpp>
+#include <boost/mpl/int.hpp>
+#include <boost/mpl/max.hpp>
+#include <boost/mpl/next.hpp>
+
+#include <boost/ref.hpp>
+#include <iostream>
+#include <typeinfo>
+
 //namespace impl
 //{
 //    namespace fusion = boost::fusion;
@@ -308,26 +304,26 @@ TEST_CASE( "result_of test", "[single-file]" ) {
 //        return 2;
 //    }
 //};
-//
-//int result_of_test()
-//{
+
+int result_of_test()
+{
 //    func f;
 //    int value = 42;
 //    using boost::ref;
 //
 //    int errors = 0;
-//
+
 //    errors += !( bind(f)() == 0);
 //    errors += !( bind(f,"Hi")() == 1);
 //    errors += !( bind(f,_1_)("there.") == 1);
 //    errors += !( bind(f,"The answer is",_1_)(12) == 2);
 //    errors += !( bind(f,_1_,ref(value))("Really?") == 2);
 //    errors += !( bind(f,_1_,_2_)("Dunno. If there is an answer, it's",value) == 2);
-//
+
 //    return !! errors;
-//}
-//
-//TEST_CASE( "result_of test", "[single-file]" ) {
-//    std::cout << "--------------result_of------------------\n";
-//    result_of_test();
-//}
+}
+
+TEST_CASE( "result_of test", "[single-file]" ) {
+    std::cout << "--------------result_of------------------\n";
+    result_of_test();
+}
