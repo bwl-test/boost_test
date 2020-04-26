@@ -7,15 +7,8 @@
 
 using namespace boost;
 
-namespace example {
-
-template <class T>
-struct unimplement;
-
-}
-
 BOOST_FUSION_DEFINE_STRUCT (
-    (example),
+    (),
     MyStruct,
     (int, a)
     (double, b)
@@ -23,7 +16,7 @@ BOOST_FUSION_DEFINE_STRUCT (
 )
 
 TEST_CASE("struct test", "[single-file]") {
-    example::MyStruct mystruct;
+    MyStruct mystruct;
     mystruct.a = 1;
     mystruct.b = 2;
     mystruct.name = "jhon";
