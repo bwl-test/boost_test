@@ -5,7 +5,8 @@ set(TARGETS
     simple_group
 	zip_view
 	result_of
-	struct)
+	struc
+	vector)
 
 foreach(target ${TARGETS})
 	set(target_src main.cpp common.hpp ${target}.cpp)

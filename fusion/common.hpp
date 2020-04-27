@@ -15,3 +15,6 @@ BOOST_FUSION_ADAPT_STRUCT (
     d,
     name
 )
+
+template <class T>
+struct unimplement;

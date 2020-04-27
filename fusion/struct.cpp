@@ -20,5 +20,10 @@ TEST_CASE("struct test", "[single-file]") {
     mystruct.a = 1;
     mystruct.b = 2;
     mystruct.name = "jhon";
-    std::cout << fusion::as_vector(mystruct) << "\n";
+    auto const &vec = fusion::as_vector(mystruct);
+    std::cout << vec << "\n";
+    
+    std::cout << mystruct.a << "\n";
+    std::cout << mystruct.b << "\n";
+    std::cout << mystruct.name << "\n";
 }
