@@ -5,7 +5,7 @@ set(TARGETS
     simple_group
 	zip_view
 	result_of
-	struc
+	struct
 	vector)
 
 foreach(target ${TARGETS})
