@@ -15,15 +15,29 @@ BOOST_FUSION_DEFINE_STRUCT (
     (std::string, name)
 )
 
+BOOST_FUSION_DEFINE_STRUCT (
+    (),
+    MyStruct2,
+    (int, a)
+    (double, b)
+    (float, c)
+)
+
 TEST_CASE("struct test", "[single-file]") {
-    MyStruct mystruct;
-    mystruct.a = 1;
-    mystruct.b = 2;
-    mystruct.name = "jhon";
-    auto const &vec = fusion::as_vector(mystruct);
+    MyStruct mystruct{1, 2, "jhon"};
+    auto vec = fusion::as_vector(mystruct);
     std::cout << vec << "\n";
     
-    std::cout << mystruct.a << "\n";
-    std::cout << mystruct.b << "\n";
+    mystruct.a = 3;
+    mystruct.b = 4;
+    mystruct.name = "white";
+    vec = mystruct;
+    std::cout << vec << "\n";
+    
+    fusion::at_c<2>(vec) = "jack";
+    mystruct = vec;
     std::cout << mystruct.name << "\n";
+    
+    MyStruct2 mystruct2{7, 8, 9};
+//    decltype(vec) vec2{mystruct2};
 }
