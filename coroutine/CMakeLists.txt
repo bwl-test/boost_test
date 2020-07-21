@@ -5,6 +5,7 @@ message("prefix: ${PREFIX}")
 set (
 	TARGETS 
 	simple
+	chain
 )
 
 foreach(TARGET ${TARGETS})
