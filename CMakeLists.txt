@@ -8,9 +8,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED true)
 find_package(Boost 
 			 REQUIRED
 			 COMPONENTS
-			 filesystem)
+			 filesystem
+			 context)
 
-set(SUBDIRS vendor/Catch2 spirit fusion)
+set(SUBDIRS vendor/Catch2 spirit fusion coroutine)
 
 foreach(DIR ${SUBDIRS})
 	add_subdirectory(${DIR})
