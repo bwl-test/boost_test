@@ -11,7 +11,7 @@ find_package(Boost
 			 filesystem
 			 context)
 
-set(SUBDIRS vendor/Catch2 spirit fusion coroutine)
+set(SUBDIRS vendor/Catch2 spirit fusion coroutine geometry)
 
 foreach(DIR ${SUBDIRS})
 	add_subdirectory(${DIR})
