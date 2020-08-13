@@ -21,7 +21,7 @@ using ring = bg::model::ring<point, false, false>;
 using polygon = bg::model::polygon<point, false, false>;
 using multipolygon = bg::model::multi_polygon<polygon>;
 
-TEST_CASE( "geometry-simple-test", "[single-file]" ) {
+TEST_CASE( "geometry-buffer-test", "[single-file]" ) {
     ring ring1{{0, 0}, {100, 0}, {100, 100}, {0, 100}};
     point p1{50, 50};
     
@@ -64,27 +64,30 @@ TEST_CASE( "geometry-simple-test", "[single-file]" ) {
 }
 
 
-TEST_CASE( "geometry-simple-test-2", "[single-file]" ) {
+TEST_CASE( "geometry-intersetion-test", "[single-file]" ) {
     ring ring1{{0, 0}, {100, 0}, {100, 100}, {0, 100}};
-    ring polygon1{{10, 50}, {90, 50}, {50, 150}};
+    ring ring2{{10, 50}, {90, 50}, {50, 150}};
+    
+    bg::correct(ring1);
+    bg::correct(ring2);
     
     multipolygon polygonOut;
-    bg::intersection(ring1, polygon1, polygonOut);
+    bg::intersection(ring1, ring2, polygonOut);
     std::cout << bg::wkt(polygonOut) << "\n";
     
     multi_point pointOut;
-    bg::intersection(ring1, polygon1, pointOut);
+    bg::intersection(ring1, ring2, pointOut);
     std::cout << bg::wkt(pointOut) << "\n";
     
     multi_line_string linestringOut;
-    bg::intersection(polygon1, ring1, linestringOut);
+    bg::intersection(ring2, ring1, linestringOut);
     std::cout << bg::wkt(linestringOut) << "\n";
     
     multi_line_string linestringOut2;
-    bg::intersection(bg::detail::boundary_view<ring>(polygon1), ring1, linestringOut2);
+    bg::intersection(bg::detail::boundary_view<ring>(ring2), ring1, linestringOut2);
     std::cout << bg::wkt(linestringOut2) << "\n";
     
-    std::cout << bg::within(polygon1, ring1) << "\n";
+    std::cout << std::boolalpha <<  bg::within(ring2, ring1) << "\n";
 }
 
 
@@ -111,7 +114,7 @@ void test(G const& g1, G const& g2) {
         std::cout << bg::wkt(polygon) << "\n";
 }
 
-TEST_CASE( "geometry-simple-test-3", "[single-file]" ) {
+TEST_CASE( "geometry-adapting-test", "[single-file]" ) {
     using Ring = std::vector<Point>;
 
     test<Ring>(
